@@ -1,0 +1,40 @@
+.error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  background-color: #fbeae5;
+  border: 1px solid #dc3545;
+  border-radius: 8px;
+  margin: 20px auto;
+  max-width: 500px;
+  text-align: center;
+  color: #58151c;
+}
+
+.title {
+  font-size: 24px;
+  margin: 0 0 10px;
+  color: #dc3545;
+}
+
+.message {
+  font-size: 16px;
+  margin: 0 0 20px;
+}
+
+.retryButton {
+  padding: 10px 20px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #dc3545;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.retryButton:hover {
+  background-color: #bb2d3b;
+}
