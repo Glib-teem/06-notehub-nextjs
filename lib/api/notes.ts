@@ -1,15 +1,5 @@
-import axios from 'axios';
+import { apiClient } from '@/lib/api';
 import type { Note, CreateNoteData, UpdateNoteParams } from '@/types/note';
-
-const API_BASE_URL = 'https://notehub-public.goit.study/api';
-
-const apiClient = axios.create({
-  baseURL: API_BASE_URL,
-  headers: {
-    Authorization: `Bearer ${process.env.NEXT_PUBLIC_NOTEHUB_TOKEN}`,
-    'Content-Type': 'application/json',
-  },
-});
 
 export interface FetchNotesParams {
   page?: number;

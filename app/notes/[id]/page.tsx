@@ -1,5 +1,5 @@
 import { fetchNoteById } from '@/lib/api/notes';
-import NoteDetails from '@/components/NoteDetails/NoteDetails';
+import NoteDetailsClient from './NoteDetails.client';
 import { notFound } from 'next/navigation';
 
 interface NoteDetailsPageProps {
@@ -13,7 +13,7 @@ export default async function NoteDetailsPage({
 }: NoteDetailsPageProps) {
   try {
     const note = await fetchNoteById(params.id);
-    return <NoteDetails note={note} />;
+    return <NoteDetailsClient note={note} />;
   } catch {
     notFound();
   }
