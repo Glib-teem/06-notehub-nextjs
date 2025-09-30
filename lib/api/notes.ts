@@ -1,5 +1,10 @@
 import { apiClient } from '@/lib/api';
-import type { Note, CreateNoteData, UpdateNoteParams } from '@/types/note';
+import type { Note, CreateNoteData } from '@/types/note';
+
+export interface UpdateNoteParams {
+  id: string;
+  data: Partial<CreateNoteData>;
+}
 
 export interface FetchNotesParams {
   page?: number;
@@ -43,13 +48,13 @@ export const createNote = async (noteData: CreateNoteData): Promise<Note> => {
 
 export const updateNote = async ({
   id,
-  data,
+  data: noteData,
 }: UpdateNoteParams): Promise<Note> => {
-  const { data: response } = await apiClient.put<{ note: Note }>(
+  const { data } = await apiClient.put<{ note: Note }>(
     `/notes/${id}`,
-    data
+    noteData
   );
-  return response.note;
+  return data.note;
 };
 
 export const deleteNote = async (noteId: string): Promise<Note> => {

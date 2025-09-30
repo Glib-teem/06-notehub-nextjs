@@ -1,30 +1,50 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import type { Note } from '@/types/note';
+import { useQuery } from '@tanstack/react-query';
+import { fetchNoteById } from '@/lib/api/notes';
+import Loader from '@/components/Loader/Loader';
+import ErrorMessage from '@/components/ErrorMessage/ErrorMessage';
 import css from '@/components/NoteDetails/NoteDetails.module.css';
 
 interface NoteDetailsClientProps {
-  note: Note;
+  noteId: string;
 }
 
-const NoteDetailsClient = ({ note }: NoteDetailsClientProps) => {
-  const [formattedDate, setFormattedDate] = useState<string>('...');
+const NoteDetailsClient = ({ noteId }: NoteDetailsClientProps) => {
+  const {
+    data: note,
+    isLoading,
+    isError,
+    error,
+    refetch,
+  } = useQuery({
+    queryKey: ['note', noteId],
+    queryFn: () => fetchNoteById(noteId),
+    refetchOnMount: true,
+  });
 
-  useEffect(() => {
-    try {
-      const date = new Date(note.createdAt);
-      const formatted = date.toLocaleDateString('en-GB', {
-        day: '2-digit',
-        month: 'short',
-        year: 'numeric',
-      });
-      setFormattedDate(formatted);
-    } catch (error) {
-      console.error('Failed to format date:', error);
-      setFormattedDate('Invalid date');
-    }
-  }, [note.createdAt]);
+  if (isLoading) {
+    return <Loader message="Loading note details..." />;
+  }
+
+  if (isError) {
+    return (
+      <ErrorMessage
+        message={error instanceof Error ? error.message : 'Failed to load note'}
+        onRetry={refetch}
+      />
+    );
+  }
+
+  if (!note) {
+    return <ErrorMessage message="Note not found" />;
+  }
+
+  const formattedDate = new Date(note.createdAt).toLocaleDateString('en-GB', {
+    day: '2-digit',
+    month: 'short',
+    year: 'numeric',
+  });
 
   return (
     <div className={css.container}>
