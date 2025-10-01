@@ -28,7 +28,7 @@ export interface FetchNotesResponse {
   totalPages: number;
 }
 
-// API функції для роботи з нотатками
+// api функції для роботи з нотатками
 export const fetchNotes = async (
   params: FetchNotesParams = {}
 ): Promise<FetchNotesResponse> => {
@@ -62,7 +62,7 @@ export const updateNote = async ({
   id,
   data: noteData,
 }: UpdateNoteParams): Promise<Note> => {
-  const { data } = await apiClient.put<Note>(`/notes/${id}`, noteData);
+  const { data } = await apiClient.patch<Note>(`/notes/${id}`, noteData);
   return data;
 };
 
