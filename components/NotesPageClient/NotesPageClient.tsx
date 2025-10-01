@@ -5,7 +5,7 @@ import { useQuery, keepPreviousData } from '@tanstack/react-query';
 import { useDebounce } from 'use-debounce';
 import dynamic from 'next/dynamic';
 import type { Note } from '@/types/note';
-import { fetchNotes } from '@/lib/api/notes';
+import { fetchNotes } from '@/lib/api';
 import NoteList from '../NoteList/NoteList';
 import SearchBox from '../SearchBox/SearchBox';
 import Pagination from '../Pagination/Pagination';
@@ -14,7 +14,6 @@ import Loader from '../Loader/Loader';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import css from './NotesPageClient.module.css';
 
-// Динамічний імпорт модального вікна без SSR
 const Modal = dynamic(() => import('../Modal/Modal'), { ssr: false });
 
 const NOTES_PER_PAGE = 12;
